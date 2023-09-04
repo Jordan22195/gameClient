@@ -1,0 +1,50 @@
+**zone packet**
+ZONE 
+zone name
+ENTITIES 
+number of ENTITIES
+<entitiy packets>
+
+
+
+**Entity packet**
+ENTITY 
+entity name
+skill type
+current health
+mex health
+current count
+maxCount
+
+
+**server command response**
+client name
+command echo
+command status (SUCCESS/FAIL)
+command response data
+
+
+
+**LOGIN command response**
+zone packet
+
+
+**set player entity target**
+no response data
+
+
+**player perform entity action**
+no response data
+
+
+**player action result**
+player name
+ACTION_RESULT
+xp 
+<list of items>
+
+
+**item packet**
+name
+quantity
+

@@ -1,0 +1,13 @@
+login
+    set player ID
+    pull player object
+
+    if player zone == null
+        set player zone to 1
+
+
+    pull zone object of player zone
+    add player to zone player list
+
+
+run 'npx http-server' in powershell from project directory
