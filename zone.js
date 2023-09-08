@@ -8,8 +8,11 @@ class Zone{
         this.entities = []
     }
 
-    buildZoneFromString(message)
+    buildZone(message)
     {
+
+        this.data = message;
+        return;
         const wordList = message.split('\n');
         for (let index = 0; index < wordList.length; index++) {
             if (wordList[index] == "ZONE")

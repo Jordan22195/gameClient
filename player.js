@@ -25,6 +25,46 @@ class Player{
         this.activitySessionStartTime = 0;
         this.activitySessionActionsPerformed = 0;
     }
+
+    buildPlayerFromString(messageList)
+    {
+        const wordList = message.split('\n');
+        for (let index = 0; index < messageList; index++) 
+        {
+
+            if(index == "WOODCUTTING_XP")
+            {
+                index++;
+                skills[WoodcuttingSkill].setXpFromString(wordList[index])
+            }
+            if(index == "ATTACK_XP")
+            {
+                index++;
+                skills[WoodcuttingSkill].setXpFromString(wordList[index])
+            }
+            if(index == "WOODCUTTING_XP")
+            {
+                index++;
+                skills[WoodcuttingSkill].setXpFromString(wordList[index])
+            }
+            if(index == "WOODCUTTING_XP")
+            {
+                index++;
+                skills[WoodcuttingSkill].setXpFromString(wordList[index])
+            }
+            if(index == "ITEM")
+            {
+                index;
+                let name = wordList[index+1]
+                let quantity = worldList[index+2]
+
+                let item = new Item(name, quantity)
+                this.bag.addItem(item);
+            }
+
+
+        }
+    }
   
     setEntityTarget(entity)
     {

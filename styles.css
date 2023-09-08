@@ -46,6 +46,15 @@
     flex: 1; /* Allow label to grow to fill available space */
     min-width: 50px; /* Set a minimum width for labels */
     text-align: right; /* Right-align labels */
+
+    display: inline-block;
+    padding: 5px;
+    transition: border 0.3s; /* Add a smooth transition for the border property */
+}
+
+/* Style the transparent box when hovering over the label */
+.entity-label:hover {
+    border: 1px solid rgba(0, 0, 0, 0.5); /* Transparent border */
 }
 
 .entity-action-button{

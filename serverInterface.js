@@ -18,6 +18,10 @@ function sleep(ms) {
 class serverInterface
 {
 
+    constructor()
+    {
+        serverInterface.player = new Player()
+    }
 
 
     socket
@@ -25,14 +29,13 @@ class serverInterface
     connected=false;
     static processIncomingServerMessage(message)
     {
+
+        let serverMessage = JSON.parse(message);
+
         // Display the message in the container
         document.querySelector(".server-message").innerHTML = message + "<br>" + document.querySelector(".server-message").innerHTML;
 
-        const wordList = message.split('\n');
-        console.log(this.playerName);
-        console.log(wordList[0]);
-
-        if(wordList[0] =! this.playerName)
+        if(serverMessage.clientName =! this.playerName)
         {
 
             console.log("unknown client id")
@@ -40,19 +43,26 @@ class serverInterface
 
         }
 
-        let command = wordList[1];
 
-        if(command == "LOGIN")
+        if(serverMessage.data.action == "LOGIN")
         {
-            console.log("login success")
-            this.loginSuccess = true;
-            this.zone = new Zone();
-            this.zone.buildZoneFromString(message);
-            let zoneview = new ZoneView();
-            zoneview.get(this.zone);
+            if(serverMessage.data.response == "SUCCESS")
+            {
+                console.log("login success")
+                this.loginSuccess = true;
+                this.zone = new Zone();
+                this.zone.buildZone(serverMessage.data.zone);
+                let zoneview = new ZoneView();
+                zoneview.get(this.zone);
+            }
         }
 
-        if(command == "ACTION_RESULT")
+        if(serverMessage.data.action == "PLAYER")
+        {
+            //serverInterface.player.buildPlayerFromString(message);
+        }
+
+        if(serverMessage.data.action == "ACTION_RESULT")
         {
             //player.process action results
         }
@@ -65,6 +75,7 @@ class serverInterface
         let message = this.playerName + "\nSET_ENTITY_TARGET \n" + entity.name + "\nPERFORM_ENTITY_ACTION\n" 
         serverInterface.send(message);
     }
+
 
     static send(message)
     {

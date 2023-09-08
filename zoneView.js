@@ -1,4 +1,4 @@
-class EntityActionButton{
+class EntityViewButton{
     constructor(actionButton, entityObject)
     {
         this.buttonRef = actionButton;
@@ -7,8 +7,8 @@ class EntityActionButton{
         console.log(this.entityRef);
         console.log(actionButton);
         this.buttonRef.addEventListener("click", () => {
-            serverInterface.setEntityTarget(this.entityRef);
-            //ActivityView.get();
+            //serverInterface.setEntityTarget(this.entityRef);
+            EntityView.get(this.entityRef)
             //ZoneView.playerRef.performEntityAction();
 
           })
@@ -34,12 +34,13 @@ class ZoneView
 
     get(zoneObject)
     {
-        ZoneView.currentZone = zoneObject;
+        ZoneView.currentZone = zoneObject.data;
         console.log(ZoneView.currentZone.entities)
 
         let titleElement = document.createElement("h1");
         titleElement.innerHTML = (`${ZoneView.currentZone.name}<br>`);
-        ZoneView.zoneContainer.appendChild(titleElement);
+
+        ZoneView.zoneElement.replaceChildren(titleElement);
 
         for (let ent of ZoneView.currentZone.entities)
         {
@@ -54,14 +55,14 @@ class ZoneView
             ZoneView.zoneElement.appendChild(entityElement);
 
             
-            let entityActionButton = ZoneView.zoneElement.querySelector(`#${ent.id}-button`);
+            let entityActionButton = ZoneView.zoneElement.querySelector(`#${ent.id}-activity-text`);
             console.log("button")
             console.log(entityElement);
             console.log(entityActionButton);
-            ZoneView.actionButtons.push( new EntityActionButton(entityActionButton, ent));
+            ZoneView.actionButtons.push( new EntityViewButton(entityActionButton, ent));
 
         }
-        ZoneView.zoneContainer.appendChild( ZoneView.zoneElement);
+        ZoneView.zoneContainer.replaceChildren( ZoneView.zoneElement);
 
     }
 
