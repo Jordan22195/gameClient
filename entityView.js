@@ -7,8 +7,7 @@ class EntityActionButton{
         console.log(this.entityRef);
         console.log(actionButton);
         this.buttonRef.addEventListener("click", () => {
-            serverInterface.setEntityTarget(this.entityRef);
-            entityView.get(this.entityRef)
+            serverInterface.startEntityAction();
             //ZoneView.playerRef.performEntityAction();
 
           })
@@ -35,6 +34,7 @@ class EntityView
 
     static get(entObject)
     {
+        EntityView.currentEnt = entObject;
         EntityView.entityContainer = document.querySelector(".entity-container");
         EntityView.actionButtons = [];
         console.log(ZoneView.currentZone.entities)

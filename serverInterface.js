@@ -31,6 +31,7 @@ class serverInterface
     {
 
         let serverMessage = JSON.parse(message);
+        //console.log("process server data", serverMessage);
 
         // Display the message in the container
         document.querySelector(".server-message").innerHTML = message + "<br>" + document.querySelector(".server-message").innerHTML;
@@ -43,28 +44,57 @@ class serverInterface
 
         }
 
-
-        if(serverMessage.data.action == "LOGIN")
+        if(serverMessage.type == "COMMAND_RESPONSE")
         {
-            if(serverMessage.data.response == "SUCCESS")
+            if(serverMessage.data.action == "LOGIN")
             {
-                console.log("login success")
-                this.loginSuccess = true;
-                this.zone = new Zone();
-                this.zone.buildZone(serverMessage.data.zone);
-                let zoneview = new ZoneView();
-                zoneview.get(this.zone);
+                if(serverMessage.data.response == "SUCCESS")
+                {
+                    console.log("login success")
+                    this.loginSuccess = true;
+                    this.zone = new Zone();
+                    this.zone.buildZone(serverMessage.data.zone);
+                    let zoneview = new ZoneView();
+                    zoneview.get(this.zone);
+                }
+            }
+
+            // do something with set entity target command response
+            if(serverMessage.data.action == "SET_ENTITY_TARGET")
+            {
+                if(serverMessage.data.result == "SUCCESS")
+                {
+                    EntityView.get(serverMessage.data.entity);
+                }
+            }
+
+            // do something with start entity action command response
+            if(serverMessage.data.action == "PERFORM_ENTITY_ACTION")
+            {
+                if(serverMessage.data.result == "SUCCESS")
+                {
+                    //do gui stuff like start progress bar
+                }
             }
         }
 
-        if(serverMessage.data.action == "PLAYER")
+        
+
+        if(serverMessage.type == "PLAYER")
         {
-            //serverInterface.player.buildPlayerFromString(message);
+            PlayerView.get(serverMessage.data)
         }
 
-        if(serverMessage.data.action == "ACTION_RESULT")
+        if(serverMessage.type == "ACTION_RESULT")
         {
             //player.process action results
+        }
+        if (serverMessage.type == "ENTITY")
+        {
+            if(serverMessage.data.id == EntityView.currentEnt.id)
+            {
+                EntityView.get(serverMessage.data);
+            }
         }
 
 
@@ -72,7 +102,19 @@ class serverInterface
 
     static setEntityTarget(entity)
     {
-        let message = this.playerName + "\nSET_ENTITY_TARGET \n" + entity.name + "\nPERFORM_ENTITY_ACTION\n" 
+        let message = this.playerName + "\nSET_ENTITY_TARGET \n" + entity.id + "\n";// + "\nPERFORM_ENTITY_ACTION\n" 
+        serverInterface.send(message);
+    }
+
+    static startEntityAction()
+    {
+        let message = this.playerName + "\nPERFORM_ENTITY_ACTION\n" 
+        serverInterface.send(message);
+    }
+
+    static exploreZoneAction()
+    {
+        let message = this.playerName + "\nEXPLORE_ZONE\n" 
         serverInterface.send(message);
     }
 
@@ -85,7 +127,7 @@ class serverInterface
 
     static connect()
     {
-            const websocketURL = 'ws://3.129.73.16:12345'; // Replace with your WebSocket server URL
+            const websocketURL = 'ws://3.129.253.156:12345'; // Replace with your WebSocket server URL
 
             // Create a WebSocket connection
             serverInterface.socket = new WebSocket(websocketURL);
