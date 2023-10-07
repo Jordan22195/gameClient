@@ -34,6 +34,7 @@ class EntityView
 
     static get(entObject)
     {
+        console.log("get Entity View");
         EntityView.currentEnt = entObject;
         EntityView.entityContainer = document.querySelector(".entity-container");
         EntityView.actionButtons = [];
@@ -53,11 +54,11 @@ class EntityView
         
         <label class="hp-label" >HP:  ${entObject.health} / ${entObject.maxHealth}  </label> 
 
-        <button class="entity-action-button" id="${entObject.id}-button"></button>`)
+        <button class="entity-action-button" id="entity-action-button-${entObject.id}"></button>`)
     
         EntityView.entityElement.appendChild(entityContents);
         
-        let entityActionButton = EntityView.entityElement.querySelector(`#${entObject.id}-button`);
+        let entityActionButton = EntityView.entityElement.querySelector(`#entity-action-button-${entObject.id}`);
         console.log("button")
    
         EntityView.actionButtons.push( new EntityActionButton(entityActionButton, entObject));

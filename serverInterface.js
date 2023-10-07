@@ -54,8 +54,8 @@ class serverInterface
                     this.loginSuccess = true;
                     this.zone = new Zone();
                     this.zone.buildZone(serverMessage.data.zone);
-                    let zoneview = new ZoneView();
-                    zoneview.get(this.zone);
+                    this.zoneview = new ZoneView();
+                    this.zoneview.get(this.zone.data);
                 }
             }
 
@@ -95,6 +95,11 @@ class serverInterface
             {
                 EntityView.get(serverMessage.data);
             }
+        }
+        if(serverMessage.type == "ZONE")
+        {
+            this.zone.buildZone(serverMessage.data);
+            this.zoneview.get(this.zone.data);
         }
 
 

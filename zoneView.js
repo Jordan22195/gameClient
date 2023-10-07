@@ -8,8 +8,7 @@ class EntityViewButton{
         console.log(actionButton);
         this.buttonRef.addEventListener("click", () => {
             serverInterface.setEntityTarget(this.entityRef);
-            //EntityView.get(this.entityRef)
-            //ZoneView.playerRef.performEntityAction();
+
 
           })
     }
@@ -21,7 +20,7 @@ class ZoneExploreButton{
         this.buttonRef = actionButton;
 
 
-        console.log(actionButton);
+        //console.log(actionButton);
         this.buttonRef.addEventListener("click", () => {
             serverInterface.exploreZoneAction();
             //ZoneView.playerRef.performEntityAction();
@@ -52,8 +51,8 @@ class ZoneView
 
     get(zoneObject)
     {
-        ZoneView.currentZone = zoneObject.data;
-        console.log(ZoneView.currentZone.entities)
+        ZoneView.currentZone = zoneObject;
+        //console.log(ZoneView.currentZone.entities)
 
         let titleElement = document.createElement("h1");
         titleElement.innerHTML = (`${ZoneView.currentZone.name}<br>`);
@@ -71,21 +70,21 @@ class ZoneView
 
         for (let ent of ZoneView.currentZone.entities)
         {
-            console.log(ent);
+            //console.log(ent);
             let entityElement = document.createElement("div");
             entityElement.classList.add('entity-element')
             entityElement.innerHTML = (`
            
-            <label class="entity-label" id="${ent.id}-activity-text">${ent.name}  </label> 
-            <label class="entity-quantity-label" id="${ent.id}-quantity-label">x${ent.count}  </label>`)
+            <label class="entity-label" id="entity-name-text-${ent.id}">${ent.name}  </label> 
+            <label class="entity-quantity-label" id="ent-quantity-label-${ent.id}">x${ent.count}  </label>`)
             ZoneView.zoneElement.appendChild(entityElement);
 
             
-            let entityActionButton = ZoneView.zoneElement.querySelector(`#${ent.id}-activity-text`);
-            console.log("button")
-            console.log(entityElement);
-            console.log(entityActionButton);
-            ZoneView.actionButtons.push( new EntityViewButton(entityActionButton, ent));
+            let entitySelectButton = ZoneView.zoneElement.querySelector(`#entity-name-text-${ent.id}`);
+            //console.log("button")
+            //console.log(entityElement);
+            //console.log(entitySelectButton);
+            ZoneView.actionButtons.push( new EntityViewButton(entitySelectButton, ent));
 
         }
         ZoneView.zoneContainer.replaceChildren( ZoneView.zoneElement);
