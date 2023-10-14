@@ -56,6 +56,7 @@ class serverInterface
                     this.zone.buildZone(serverMessage.data.zone);
                     this.zoneview = new ZoneView();
                     this.zoneview.get(this.zone.data);
+                    PlayerView.get(serverMessage.data.player)
                 }
             }
 

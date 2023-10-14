@@ -39,6 +39,8 @@ class PlayerView
         let titleElement = document.createElement("h1");
         titleElement.innerHTML = (`${PlayerView.playerObject.name}<br>`);
 
+        return;
+
         PlayerView.playerElement.replaceChildren(titleElement);
 
         //list out skills
